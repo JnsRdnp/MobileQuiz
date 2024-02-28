@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import Questions from './components/Questions';
+import { Header } from 'react-native/Libraries/NewAppScreen';
 
 export default function App() {
+  const [questions,setQuestions] = useState([])
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Questions/>
+    </SafeAreaView>
   );
 }
 
