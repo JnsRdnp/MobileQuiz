@@ -76,48 +76,51 @@ const SettingsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#ffffff',
-  },
-  buttonGroup: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    fontSize: 24,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: '#dddddd',
-    marginHorizontal: 8,
-  },
-  text: {
-    color: '#333333',
-    fontFamily: 'Arial', // Change to your preferred font family
-    fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-  difficultyTitle: {
-    marginTop: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#007bff', // Change color as needed
-  },
-  difficultyItem: {
-    marginVertical: 4,
-  },
-  selectedDifficulty: {
-    borderWidth: 1,
-    borderColor: '#007bff',
-    borderRadius: 20,
-    backgroundColor: 'transparent',
-    color: '#007bff', // Change color as needed
-  },
-});
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#ffffff',
+    },
+    buttonGroup: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    button: {
+      fontSize: 24,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 20,
+      backgroundColor: '#dddddd',
+      marginHorizontal: 8,
+    },
+    text: {
+      color: '#333333',
+      fontFamily: 'Arial', // Change to your preferred font family
+      fontWeight: 'bold',
+      textShadowColor: 'rgba(0, 0, 0, 0.3)',
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
+    },
+    difficultyTitle: {
+      marginTop: 20,
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#007bff', // Change color as needed
+      backgroundColor: '#f0f0f0', // Added background color
+      paddingVertical: 8, // Added padding to visually separate from the buttons
+      paddingHorizontal: 16, // Added padding to visually separate from the buttons
+    },
+    difficultyItem: {
+      marginVertical: 4,
+    },
+    selectedDifficulty: {
+      borderWidth: 1,
+      borderColor: '#007bff',
+      borderRadius: 20,
+      backgroundColor: 'transparent',
+      color: '#007bff', // Change color as needed
+    },
+  });
 
 export default SettingsScreen;

@@ -4,21 +4,21 @@ import { Button, IconButton } from 'react-native-paper';
 import { useSettings } from '../context/SettingsContext';
 
 const HomeScreen = ({ navigation }) => {
-  const { difficulty } = useSettings(); // Access selectedDifficulty from the settings context
+    const { difficulty } = useSettings(); // Access selectedDifficulty from the settings context
+    const {players} = useSettings();
 
 
+    const handleStartQuiz = () => {
+    navigation.navigate('Questions', { questionAmount: 10, selectedDifficulty: difficulty, playerInt: players }); // Pass selectedDifficulty to Questions screen
+    };
 
-  const handleStartQuiz = () => {
-    navigation.navigate('Questions', { questionAmount: 10, selectedDifficulty: difficulty }); // Pass selectedDifficulty to Questions screen
-  };
-
-  const handleStartAbout = () => {
+    const handleStartAbout = () => {
     navigation.navigate('About');
-  };
+    };
 
-  const handleStartSettings = () => {
+    const handleStartSettings = () => {
     navigation.navigate('Settings');
-  };
+    };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,43 +52,46 @@ const HomeScreen = ({ navigation }) => {
       />
 
     <Text style={styles.settingsText}>Difficulty: {difficulty}</Text>
+    <Text style={styles.settingsText}>Players: {players}</Text>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '80%',
-    marginBottom: 20,
-  },
-  startButton: {
-    borderRadius: 8,
-    width: '100%', // Adjust the width as needed
-    flex: 1
-  },
-  button: {
-    marginBottom: 20,
-    borderRadius: 8,
-    width: '80%',
-  },
-  buttonLabel: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  settingsText: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-});
-
-export default HomeScreen;
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      paddingHorizontal: 20,
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '80%',
+      marginBottom: 20,
+    },
+    startButton: {
+      borderRadius: 8,
+      width: '100%', // Adjust the width as needed
+      flex: 1
+    },
+    button: {
+      marginBottom: 20,
+      borderRadius: 8,
+      width: '80%',
+    },
+    buttonLabel: {
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    settingsText: {
+      fontSize: 16,
+      marginBottom: 10,
+      fontWeight: 'bold', // Add this line to make the text bold
+      color: '#333', // Add this line to set the text color
+    },
+  });
+  
+  export default HomeScreen;
