@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import he from 'he'; // Import the 'he' library
 
-const quizUrl = 'https://opentdb.com/api.php?amount=10&type=multiple';
 
-const Questions = () => {
+
+const Questions = ({route}) => {
+
+  const { questionAmount } = route.params;
+  const {selectedDifficulty} = route.params;
+  const quizUrl = `https://opentdb.com/api.php?amount=${questionAmount}&type=multiple&difficulty=${selectedDifficulty}`;
+
     const [questionObjects, setQuestionObjects] = useState([]);
     const [answers, setAnswers] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState('');
     const [points, setPoints] = useState(0);
 
     const fetchQuestions = () => {
@@ -41,12 +45,11 @@ const Questions = () => {
     };
 
     const handleNextQuestion = () => {
-        console.log('F: HANDLE NEXT QUESTION... \n');
-        if (questionObjects.length > 0) {
-            setSelectedIndex(prevIndex => (prevIndex + 1) % questionObjects.length); 
-        }
-        setSelectedAnswer('');
-    };
+      console.log('F: HANDLE NEXT QUESTION... \n');
+      if (questionObjects.length > 0) { // Corrected condition
+          setSelectedIndex(prevIndex => (prevIndex + 1) % questionObjects.length); 
+      }
+  };
 
     useEffect(() => {
         console.log('F: FETCH QUESTIONS... \n');
@@ -75,9 +78,16 @@ const Questions = () => {
         <SafeAreaView>
             {answers.length > 0 && questionObjects.length > 0 && (
                 <View>
+
+                    {/* tracking of question index */}
+                    <Text>{selectedIndex+1}/{questionObjects.length} - {selectedDifficulty}</Text>
+
+                    {/* print question */}
                     <Text style={styles.question}>
                         {he.decode(questionObjects[selectedIndex].question)}
                     </Text>
+
+                    {/* print answers */}
                     {answers[selectedIndex].map((answer, index) => (
                         <Button 
                             key={index} 
@@ -86,7 +96,7 @@ const Questions = () => {
                         />
                     ))}
 
-                    
+
                     {/* <Button title="Submit Answer" onPress={handleAnswer} /> */}
                     {/* <Button title="Next Question" onPress={handleNextQuestion} /> */}
                     <Text>Points: {points}</Text>

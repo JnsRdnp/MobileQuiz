@@ -1,16 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import Questions from './components/Questions';
-import { Header } from 'react-native/Libraries/NewAppScreen';
+import HomeScreen from './components/HomeScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [questions,setQuestions] = useState([])
-
   return (
-    <SafeAreaView style={styles.container}>
-      <Questions/>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+        <Stack.Screen name="Questions" component={Questions} options={{ title: 'MobileQuiz' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
