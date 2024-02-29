@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import he from 'he'; // Import the 'he' library
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, useTheme } from 'react-native-paper';
+import he from 'he';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+const Questions = ({ route }) => {
+    const theme = useTheme();
 
-
-const Questions = ({route}) => {
-
-  const { questionAmount } = route.params;
-  const {selectedDifficulty} = route.params;
-  const quizUrl = `https://opentdb.com/api.php?amount=${questionAmount}&type=multiple&difficulty=${selectedDifficulty}`;
+    const { questionAmount } = route.params;
+    const { selectedDifficulty } = route.params;
+    const quizUrl = `https://opentdb.com/api.php?amount=${questionAmount}&type=multiple&difficulty=${selectedDifficulty}`;
 
     const [questionObjects, setQuestionObjects] = useState([]);
     const [answers, setAnswers] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [points, setPoints] = useState(0);
+    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
+    const [wrongAnswers, setWrongAnswers] = useState([]);
 
     const fetchQuestions = () => {
         fetch(quizUrl)
             .then(res => res.json())
             .then(json => {
-                setQuestionObjects(json.results); 
+                setQuestionObjects(json.results);
             })
             .catch(error => {
                 console.log('Error in fetch:', error);
@@ -34,72 +37,61 @@ const Questions = ({route}) => {
         return array;
     };
 
-    const handleAnswer = (ans) => {
-      console.log('answer check', ans, ' -- ', questionObjects[selectedIndex].correct_answer)
-
+    const handleAnswer = (ans, index) => {
         if (ans === questionObjects[selectedIndex].correct_answer) {
-            
             setPoints(points + 1);
+            handleNextQuestion();
+        } else {
+            setWrongAnswers(prevState => [...prevState, selectedIndex]);
         }
-        handleNextQuestion();
+        setSelectedAnswerIndex(index);
     };
 
     const handleNextQuestion = () => {
-      console.log('F: HANDLE NEXT QUESTION... \n');
-      if (questionObjects.length > 0) { // Corrected condition
-          setSelectedIndex(prevIndex => (prevIndex + 1) % questionObjects.length); 
-      }
-  };
+        if (questionObjects.length > 0) {
+            setSelectedIndex(prevIndex => (prevIndex + 1) % questionObjects.length);
+            setSelectedAnswerIndex(null); // Reset selected answer
+        }
+    };
 
     useEffect(() => {
-        console.log('F: FETCH QUESTIONS... \n');
         fetchQuestions();
     }, []);
 
     useEffect(() => {
-        console.log('F: JOINING ANSWERS... \n');
         const tempAnswersArray = [];
-
         if (questionObjects.length > 0) {
             questionObjects.forEach(question => {
                 const answers = [question.correct_answer, ...question.incorrect_answers];
                 tempAnswersArray.push(shuffleArray(answers));
             });
         }
-
         if (tempAnswersArray.length > 0) {
             setAnswers(tempAnswersArray);
         }
-
-        console.log('Answers useState:.... ', answers);
     }, [questionObjects]);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             {answers.length > 0 && questionObjects.length > 0 && (
-                <View>
-
-                    {/* tracking of question index */}
-                    <Text>{selectedIndex+1}/{questionObjects.length} - {selectedDifficulty}</Text>
-
-                    {/* print question */}
-                    <Text style={styles.question}>
-                        {he.decode(questionObjects[selectedIndex].question)}
-                    </Text>
-
-                    {/* print answers */}
+                <View style={styles.innerContainer}>
+                    <Text style={styles.questionCounter}>{selectedIndex + 1}/{questionObjects.length} - {selectedDifficulty}</Text>
+                    <Text style={styles.questionText}>{he.decode(questionObjects[selectedIndex].question)}</Text>
                     {answers[selectedIndex].map((answer, index) => (
-                        <Button 
-                            key={index} 
-                            title={he.decode(answer)}
-                            onPress={() => {handleAnswer(answer)}}
-                        />
+                        <Button
+                            key={index}
+                            mode="outlined"
+                            // style={[
+                            //     styles.answerButton,
+                            //     selectedAnswerIndex === index && answer !== questionObjects[selectedIndex].correct_answer && styles.wrongAnswerButton,
+                            //     wrongAnswers.includes(selectedIndex) && index === questionObjects[selectedIndex].incorrect_answers.indexOf(answer) && styles.wrongAnswerButton
+                            // ]}
+                            onPress={() => handleAnswer(answer, index)}
+                        >
+                            {he.decode(answer)}
+                        </Button>
                     ))}
-
-
-                    {/* <Button title="Submit Answer" onPress={handleAnswer} /> */}
-                    {/* <Button title="Next Question" onPress={handleNextQuestion} /> */}
-                    <Text>Points: {points}</Text>
+                    <Text style={styles.pointsText}>Points: {points}</Text>
                 </View>
             )}
         </SafeAreaView>
@@ -109,8 +101,37 @@ const Questions = ({route}) => {
 export default Questions;
 
 const styles = StyleSheet.create({
-    question: {
-        padding: 10,
-        backgroundColor: 'lightblue',
-    }
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+    },
+    innerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    questionCounter: {
+        fontSize: 16,
+        marginBottom: 10,
+    },
+    questionText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    answerButton: {
+        width: '100%',
+        marginVertical: 5,
+    },
+    wrongAnswerButton: {
+        backgroundColor: 'red',
+    },
+    pointsText: {
+        fontSize: 16,
+        marginTop: 20,
+    },
 });
