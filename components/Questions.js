@@ -139,16 +139,25 @@ const Questions = ({ route }) => {
                         </Button>
                     ))}
 
-                    <View style={styles.playerScoresContainer}>
-                        {players.map((player, index) => (
-                            <Card key={index} style={[styles.playerCard, { backgroundColor: getPlayerCardColor(index)}]}>
-                                <Card.Content>
-                                    <Title style={styles.playerTitle}>Player {index + 1}</Title>
-                                    <Paragraph style={styles.playerParagraph}>Score: {player}</Paragraph>
-                                </Card.Content>
-                            </Card>
-                        ))}
-                    </View>
+<View style={styles.playerScoresContainer}>
+    {players.map((player, index) => (
+        <Card
+            key={index}
+            style={[
+                styles.playerCard,
+                { 
+                    backgroundColor: getPlayerCardColor(index),
+                    ...(index === playerTurnIndex ? styles.playerTurnCard : {}) // Apply playerTurnCard styling if index matches playerTurnIndex
+                }
+            ]}
+        >
+            <Card.Content>
+                <Title style={styles.playerTitle}>Player {index + 1}</Title>
+                <Paragraph style={styles.playerParagraph}>Score: {player}</Paragraph>
+            </Card.Content>
+        </Card>
+    ))}
+</View>
                 </View>
             )}
         </SafeAreaView>
@@ -201,6 +210,12 @@ const styles = StyleSheet.create({
     playerCard: {
         width: '48%', // Adjust card width as needed
         marginBottom: 10,
+        opacity: 0.5
+    },
+    playerTurnCard: {
+      width: '48%', // Adjust card width as needed
+      marginBottom: 10,
+      opacity: 1
     },
     playerTitle: {
         fontSize: 16,
