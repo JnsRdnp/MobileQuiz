@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { Button, IconButton } from 'react-native-paper';
 import { useSettings } from '../context/SettingsContext';
 
@@ -22,6 +22,12 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      <Image
+        source={require('../assets/logo.png')} // Replace 'path/to/your/logo.png' with the actual path to your logo image
+        style={styles.logo}
+        resizeMode="contain" // Adjust the resizeMode as needed
+      />
 
 
       <View style={styles.buttonContainer}>
@@ -64,6 +70,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#fff',
       paddingHorizontal: 20,
+    },
+    logo: {
+      width: 200, // Adjust the width of the logo as needed
+      height: 200, // Adjust the height of the logo as needed
+      marginBottom: 20, // Adjust the margin as needed
     },
     buttonContainer: {
       flexDirection: 'row',
