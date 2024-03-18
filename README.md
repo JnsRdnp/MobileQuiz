@@ -2,6 +2,9 @@
 
 MobileQuiz is an exciting party game inspired by the Smart10 board game. Gather your friends or form teams, each color-coded for easy identification, and dive into a world of endless fun!
 
+## Introduction Video
+https://www.youtube.com/watch?v=fDSHkjlcbOA&ab_channel=JoonasRidanp%C3%A4%C3%A4
+
 ## How to Play
 
 In each round, players face intriguing questions. Answer correctly to earn points and advance swiftly to the next challenge. If you stumble, don't worry! The same question passes to the next team, giving them a chance to score.
@@ -13,3 +16,4 @@ Personalize your game settings and adjustments from the settings page, accessibl
 ## API
 
 The API used for the questions is the "Open Trivia Database" available at [https://opentdb.com/](https://opentdb.com/). This reliable source ensures a diverse and engaging range of questions for your MobileQuiz experience.
+
