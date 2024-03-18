@@ -3,7 +3,7 @@
 MobileQuiz is an exciting party game inspired by the Smart10 board game. Gather your friends or form teams, each color-coded for easy identification, and dive into a world of endless fun!
 
 ## Introduction Video
-https://www.youtube.com/watch?v=fDSHkjlcbOA&ab_channel=JoonasRidanp%C3%A4%C3%A4
+https://youtu.be/fDSHkjlcbOA?feature=shared
 
 ## How to Play
 
